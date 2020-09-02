@@ -4,7 +4,7 @@
 #include <thread>
 #include <thread>
 #include <functional>
-#include "timer.hh"
+#include "../timer.hh"
 
 using namespace std;
 
@@ -39,14 +39,11 @@ vector<vector<int>> initializeMatrix(int dimensions)
  * @param j Row index
  * @param sum Result of a multiplication cell
  */
-void computeCell(const vector<vector<int>> &a, const vector<vector<int>> &b, int i, vector<int> &sum)
+void computeCell(const vector<vector<int>> &a, const vector<vector<int>> &b, int i, int j, int &sum)
 {
-    for (size_t j = 0; j < a.size(); j++)
+    for (size_t k = 0; k < a.size(); k++)
     {
-        for (size_t k = 0; k < a.size(); k++)
-        {
-            sum[j] += a[i][k] * b[k][j];
-        }
+        sum += a[i][k] * b[k][j];
     }
 }
 
@@ -59,12 +56,16 @@ void computeCell(const vector<vector<int>> &a, const vector<vector<int>> &b, int
  */
 vector<vector<int>> assingMult(vector<vector<int>> a, vector<vector<int>> b)
 {
-    vector<vector<int>> mult(a.size(), vector<int>(a.size(), 0));
+    vector<vector<int>> mult;
     vector<thread> threads;
     for (size_t i = 0; i < a.size(); i++)
     {
-        vector<int> &result = mult[i];
-        threads.push_back(thread(computeCell, cref(a), cref(b), i, ref(result)));
+        mult.push_back(vector<int>(a.size(), 0));
+        for (size_t j = 0; j < a[i].size(); j++)
+        {
+            int &result = mult[i][j];
+            threads.push_back(thread(computeCell, cref(a), cref(b), i, j, ref(result)));
+        }
     }
     /* const auto processorCount = thread::hardware_concurrency();
     int iteration = threads.size() / processorCount; */
