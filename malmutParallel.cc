@@ -15,17 +15,17 @@ using namespace std;
  * @param dimensions Number of dimensions.
  * @return Matrix initialized
  */
-vector<vector<int>> initializeMatrix(int dimensions)
+int** initializeMatrix(int dimensions)
 {
-    vector<vector<int>> a;
+    int** a;
+    a = new int*[dimensions];
     for (size_t i = 0; i < dimensions; i++)
     {
-        vector<int> ac;
+        a[i] = new int[dimensions];
         for (size_t j = 0; j < dimensions; j++)
         {
-            ac.push_back(rand() % 100);
+            a[i][j] = rand() % 100;
         }
-        a.push_back(ac);
     }
     return a;
 }
@@ -57,13 +57,14 @@ void computeCell(const vector<vector<int>> &a, const vector<vector<int>> &b, int
  * @param b Matrix B.
  * @return Matrix multiplication between A and B
  */
-vector<vector<int>> assingMult(vector<vector<int>> a, vector<vector<int>> b)
+int** assingMult(int** a, int** b)
 {
-    vector<vector<int>> mult(a.size(), vector<int>(a.size(), 0));
+    int** mult;
     vector<thread> threads;
-    for (size_t i = 0; i < a.size(); i++)
+    for (size_t i = 0; i < sizeof(a); i++)
     {
-        vector<int> &result = mult[i];
+        mult[i] = new int[sizeof(a)];
+        int* &result = mult[i];
         threads.push_back(thread(computeCell, cref(a), cref(b), i, ref(result)));
     }
     /* const auto processorCount = thread::hardware_concurrency();
@@ -78,14 +79,14 @@ vector<vector<int>> assingMult(vector<vector<int>> a, vector<vector<int>> b)
  *
  * @param a Matrix instance.
  */
-void visualizeArray(vector<vector<int>> a)
+void visualizeArray(int** a)
 {
-    for (size_t i = 0; i < a.size(); i++)
+    for (size_t i = 0; i < sizeof(a); i++)
     {
-        for (size_t j = 0; j < a[i].size(); j++)
+        for (size_t j = 0; j < sizeof(a[i]); j++)
         {
             cout << a[i][j] << "|";
-            if (j == a[i].size() - 1)
+            if (j == sizeof(a[i]) - 1)
             {
                 cout << endl;
             }
@@ -100,7 +101,9 @@ void visualizeArray(vector<vector<int>> a)
  */
 int main()
 {
-    vector<vector<int>> a, b, mult;
+    int** a;
+    int** b;
+    int** mult;
     int dimensions;
     cout << "Ingrese el número de dimensiones: ";
     cin >> dimensions;
