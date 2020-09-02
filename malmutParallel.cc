@@ -39,11 +39,12 @@ int** initializeMatrix(int dimensions)
  * @param j Row index
  * @param sum Result of a multiplication cell
  */
-void computeCell(const vector<vector<int>> &a, const vector<vector<int>> &b, int i, vector<int> &sum)
+void computeCell(const int** &a, const int** &b, int i, int* &sum)
 {
-    for (size_t j = 0; j < a.size(); j++)
+    for (size_t j = 0; j < sizeof(a); j++)
     {
-        for (size_t k = 0; k < a.size(); k++)
+        sum[j] = 0;
+        for (size_t k = 0; k < sizeof(a); k++)
         {
             sum[j] += a[i][k] * b[k][j];
         }
