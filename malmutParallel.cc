@@ -8,9 +8,8 @@
 using namespace std;
 
 /**
- * Initialize an matrix.
+ * Initialize a matrix.
  *
- * @param columns Number of columns.
  * @param dimensions Number of dimensions.
  * @return Matrix initialized
  */
@@ -31,7 +30,8 @@ int** initializeMatrix(int dimensions)
 /**
  * Visualize a determinate matrix.
  *
- * @param a Matrix instance.
+ * @param a Matrix instance
+ * @param dimensions Matrix dimensions number
  */
 void visualizeArray(int** a, int dimensions)
 {
@@ -54,7 +54,7 @@ void visualizeArray(int** a, int dimensions)
  * @param a Matrix A
  * @param b Matrix B
  * @param i Column index
- * @param j Row index
+ * @param dimensions Matrix dimensions number
  * @param sum Result of a multiplication cell
  */
 void computeCell(int** &a, int** &b, int i, int dimensions, int* &sum)
@@ -74,6 +74,7 @@ void computeCell(int** &a, int** &b, int i, int dimensions, int* &sum)
  *
  * @param a Matrix A.
  * @param b Matrix B.
+ * @param dimensions Matrix dimension number
  * @return Matrix multiplication between A and B
  */
 int** assingMult(int** a, int** b, int dimensions)
