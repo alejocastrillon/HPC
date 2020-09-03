@@ -104,10 +104,9 @@ int main()
     int dimensions;
     cout << "Ingrese el número de dimensiones: ";
     cin >> dimensions;
-    Timer t;
     a = initializeMatrix(dimensions);
     b = initializeMatrix(dimensions);
-
+    Timer t;
     mult = assingMult(a, b);
     cout << "Elementos de la matriz A: " << endl;
     visualizeArray(a);
