@@ -1,7 +1,7 @@
 #include <iostream>
 #include <stdlib.h>
 #include <vector>
-#include "timer.hh"
+#include "../timer.hh"
 
 using namespace std;
 
@@ -84,9 +84,9 @@ int main()
     int dimensions;
     cout << "Ingrese el número de dimensiones: ";
     cin >> dimensions;
-    Timer t;
     a = initializeMatrix(dimensions);
     b = initializeMatrix(dimensions);
+    Timer t;
 
     mult = computeMult(a, b);
     cout << "Elementos de la matriz A: \n";
