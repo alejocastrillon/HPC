@@ -2,7 +2,6 @@
 #include <stdlib.h>
 #include <vector>
 #include <thread>
-#include <thread>
 #include <functional>
 #include "timer.hh"
 
@@ -17,8 +16,7 @@ using namespace std;
  */
 int** initializeMatrix(int dimensions)
 {
-    int** a;
-    a = new int*[dimensions];
+    int** a = new int*[dimensions];
     for (size_t i = 0; i < dimensions; i++)
     {
         a[i] = new int[dimensions];
@@ -31,6 +29,26 @@ int** initializeMatrix(int dimensions)
 }
 
 /**
+ * Visualize a determinate matrix.
+ *
+ * @param a Matrix instance.
+ */
+void visualizeArray(int** a, int dimensions)
+{
+    for (size_t i = 0; i < dimensions; i++)
+    {
+        for (size_t j = 0; j < dimensions; j++)
+        {
+            cout << a[i][j] << "|";
+            if (j == dimensions - 1)
+            {
+                cout << endl;
+            }
+        }
+    }
+}
+
+/**
  * Compute the  result of a cell of matrix multiplication.
  *
  * @param a Matrix A
@@ -39,12 +57,12 @@ int** initializeMatrix(int dimensions)
  * @param j Row index
  * @param sum Result of a multiplication cell
  */
-void computeCell(const int** &a, const int** &b, int i, int* &sum)
+void computeCell(int** &a, int** &b, int i, int dimensions, int* &sum)
 {
-    for (size_t j = 0; j < sizeof(a); j++)
+    for (size_t j = 0; j < dimensions; j++)
     {
         sum[j] = 0;
-        for (size_t k = 0; k < sizeof(a); k++)
+        for (size_t k = 0; k < dimensions; k++)
         {
             sum[j] += a[i][k] * b[k][j];
         }
@@ -58,41 +76,21 @@ void computeCell(const int** &a, const int** &b, int i, int* &sum)
  * @param b Matrix B.
  * @return Matrix multiplication between A and B
  */
-int** assingMult(int** a, int** b)
+int** assingMult(int** a, int** b, int dimensions)
 {
-    int** mult;
+    int** mult = new int*[dimensions];
     vector<thread> threads;
-    for (size_t i = 0; i < sizeof(a); i++)
+    for (size_t i = 0; i < dimensions; i++)
     {
-        mult[i] = new int[sizeof(a)];
+        mult[i] = new int[dimensions];
         int* &result = mult[i];
-        threads.push_back(thread(computeCell, cref(a), cref(b), i, ref(result)));
+        threads.push_back(thread(computeCell, ref(a), ref(b), i, dimensions, ref(result)));
     }
     /* const auto processorCount = thread::hardware_concurrency();
     int iteration = threads.size() / processorCount; */
     for (thread &t : threads)
         t.join();
     return mult;
-}
-
-/**
- * Visualize a determinate matrix.
- *
- * @param a Matrix instance.
- */
-void visualizeArray(int** a)
-{
-    for (size_t i = 0; i < sizeof(a); i++)
-    {
-        for (size_t j = 0; j < sizeof(a[i]); j++)
-        {
-            cout << a[i][j] << "|";
-            if (j == sizeof(a[i]) - 1)
-            {
-                cout << endl;
-            }
-        }
-    }
 }
 
 /**
@@ -111,16 +109,14 @@ int main()
     Timer t;
     a = initializeMatrix(dimensions);
     b = initializeMatrix(dimensions);
-
-    mult = assingMult(a, b);
+    mult = assingMult(a, b, dimensions);
     cout << "Elementos de la matriz A: " << endl;
-    visualizeArray(a);
+    visualizeArray(a, dimensions);
 
     cout << "Elementos de la matriz B: " << endl;
-    visualizeArray(b);
-
+    visualizeArray(b, dimensions);
     cout << "Resultado: " << endl;
-    visualizeArray(mult);
+    visualizeArray(mult, dimensions);
 
     cout << "Tiempo de ejecución: " << t.elapsed() << "ms" << endl;
 
