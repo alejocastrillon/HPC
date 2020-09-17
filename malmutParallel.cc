@@ -2,32 +2,50 @@
 #include <stdlib.h>
 #include <vector>
 #include <thread>
-#include <thread>
 #include <functional>
 #include "timer.hh"
 
 using namespace std;
 
 /**
- * Initialize an matrix.
+ * Initialize a matrix.
  *
- * @param columns Number of columns.
  * @param dimensions Number of dimensions.
  * @return Matrix initialized
  */
-vector<vector<int>> initializeMatrix(int dimensions)
+int** initializeMatrix(int dimensions)
 {
-    vector<vector<int>> a;
+    int** a = new int*[dimensions];
     for (size_t i = 0; i < dimensions; i++)
     {
-        vector<int> ac;
+        a[i] = new int[dimensions];
         for (size_t j = 0; j < dimensions; j++)
         {
-            ac.push_back(rand() % 100);
+            a[i][j] = rand() % 100;
         }
-        a.push_back(ac);
     }
     return a;
+}
+
+/**
+ * Visualize a determinate matrix.
+ *
+ * @param a Matrix instance
+ * @param dimensions Matrix dimensions number
+ */
+void visualizeArray(int** a, int dimensions)
+{
+    for (size_t i = 0; i < dimensions; i++)
+    {
+        for (size_t j = 0; j < dimensions; j++)
+        {
+            cout << a[i][j] << "|";
+            if (j == dimensions - 1)
+            {
+                cout << endl;
+            }
+        }
+    }
 }
 
 /**
@@ -36,14 +54,15 @@ vector<vector<int>> initializeMatrix(int dimensions)
  * @param a Matrix A
  * @param b Matrix B
  * @param i Column index
- * @param j Row index
+ * @param dimensions Matrix dimensions number
  * @param sum Result of a multiplication cell
  */
-void computeCell(const vector<vector<int>> &a, const vector<vector<int>> &b, int i, vector<int> &sum)
+void computeCell(int** &a, int** &b, int i, int dimensions, int* &sum)
 {
-    for (size_t j = 0; j < a.size(); j++)
+    for (size_t j = 0; j < dimensions; j++)
     {
-        for (size_t k = 0; k < a.size(); k++)
+        sum[j] = 0;
+        for (size_t k = 0; k < dimensions; k++)
         {
             sum[j] += a[i][k] * b[k][j];
         }
@@ -55,16 +74,18 @@ void computeCell(const vector<vector<int>> &a, const vector<vector<int>> &b, int
  *
  * @param a Matrix A.
  * @param b Matrix B.
+ * @param dimensions Matrix dimension number
  * @return Matrix multiplication between A and B
  */
-vector<vector<int>> assingMult(vector<vector<int>> a, vector<vector<int>> b)
+int** assingMult(int** a, int** b, int dimensions)
 {
-    vector<vector<int>> mult(a.size(), vector<int>(a.size(), 0));
+    int** mult = new int*[dimensions];
     vector<thread> threads;
-    for (size_t i = 0; i < a.size(); i++)
+    for (size_t i = 0; i < dimensions; i++)
     {
-        vector<int> &result = mult[i];
-        threads.push_back(thread(computeCell, cref(a), cref(b), i, ref(result)));
+        mult[i] = new int[dimensions];
+        int* &result = mult[i];
+        threads.push_back(thread(computeCell, ref(a), ref(b), i, dimensions, ref(result)));
     }
     /* const auto processorCount = thread::hardware_concurrency();
     int iteration = threads.size() / processorCount; */
@@ -74,48 +95,29 @@ vector<vector<int>> assingMult(vector<vector<int>> a, vector<vector<int>> b)
 }
 
 /**
- * Visualize a determinate matrix.
- *
- * @param a Matrix instance.
- */
-void visualizeArray(vector<vector<int>> a)
-{
-    for (size_t i = 0; i < a.size(); i++)
-    {
-        for (size_t j = 0; j < a[i].size(); j++)
-        {
-            cout << a[i][j] << "|";
-            if (j == a[i].size() - 1)
-            {
-                cout << endl;
-            }
-        }
-    }
-}
-
-/**
  * Main function.
  * 
  * @return State of the process
  */
 int main()
 {
-    vector<vector<int>> a, b, mult;
+    int** a;
+    int** b;
+    int** mult;
     int dimensions;
     cout << "Ingrese el número de dimensiones: ";
     cin >> dimensions;
     a = initializeMatrix(dimensions);
     b = initializeMatrix(dimensions);
     Timer t;
-    mult = assingMult(a, b);
+    mult = assingMult(a, b, dimensions);
     cout << "Elementos de la matriz A: " << endl;
-    visualizeArray(a);
+    visualizeArray(a, dimensions);
 
     cout << "Elementos de la matriz B: " << endl;
-    visualizeArray(b);
-
+    visualizeArray(b, dimensions);
     cout << "Resultado: " << endl;
-    visualizeArray(mult);
+    visualizeArray(mult, dimensions);
 
     cout << "Tiempo de ejecución: " << t.elapsed() << "ms" << endl;
 
