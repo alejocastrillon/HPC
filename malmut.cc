@@ -11,16 +11,15 @@ using namespace std;
  * @param dimensions Number of dimensions.
  * @return Matrix initialized
  */
-vector<vector<int> > initializeMatrix(int dimensions) {
-    vector<vector<int> > a;
+int **initializeMatrix(int dimensions) {
+    int **a = new int *[dimensions];
     for (size_t i = 0; i < dimensions; i++)
     {
-        vector<int> ac;
+        a[i] = new int[dimensions];
         for (size_t j = 0; j < dimensions; j++)
         {
-            ac.push_back(rand() % 100);
+            a[i][j] = rand() % 100;
         }
-        a.push_back(ac);
     }
     return a;
 }
@@ -32,19 +31,18 @@ vector<vector<int> > initializeMatrix(int dimensions) {
  * @param b Matrix B.
  * @return Matrix multiplication between A and B
  */
-vector<vector<int> > computeMult(vector<vector<int> > a, vector<vector<int> > b) {
-    vector<vector<int> > mult;
-    for (size_t i = 0; i < a.size(); i++)
+int **computeMult(int **a, int **b, int dimensions) {
+    int **mult = new int *[dimensions];
+    for (size_t i = 0; i < dimensions; i++)
     {
-        vector<int> res(a.size(), 0);
-        for (size_t j = 0; j < a[i].size(); j++)
+        mult[i] = new int[dimensions];
+        for (size_t j = 0; j < dimensions; j++)
         {
-            for (size_t k = 0; k < a[i].size(); k++)
+            for (size_t k = 0; k < dimensions; k++)
             {
-                res[j] += a[i][k] * b[k][j];
+                mult[i][j] += a[i][k] * b[k][j];
             }
         }
-        mult.push_back(res);
     }
     return mult;
 }
@@ -54,16 +52,16 @@ vector<vector<int> > computeMult(vector<vector<int> > a, vector<vector<int> > b)
  *
  * @param a Matrix instance.
  */
-void visualizeArray(vector<vector<int> > a) {
-    for (size_t i = 0; i < a.size(); i++)
+void visualizeArray(int **a, int dimensions) {
+    for (size_t i = 0; i < dimensions; i++)
     {
-        for (size_t j = 0; j < a[i].size(); j++)
+        for (size_t j = 0; j < dimensions; j++)
         {
             cout << a[i][j] << "|";
-            if (j == a[i].size() - 1)
+            if (j == dimensions - 1)
             {
                 cout << "\n";
-                for (size_t ch = 0; ch < (a.size() * 2) + a.size(); ch++)
+                for (size_t ch = 0; ch < (dimensions * 2) + dimensions; ch++)
                 {
                     cout << "-";
                 }
@@ -80,7 +78,9 @@ void visualizeArray(vector<vector<int> > a) {
  */
 int main()
 {
-    vector<vector<int> > a, b, mult;
+    int **a;
+    int **b;
+    int **mult;
     int dimensions;
     cout << "Ingrese el número de dimensiones: ";
     cin >> dimensions;
@@ -88,17 +88,19 @@ int main()
     a = initializeMatrix(dimensions);
     b = initializeMatrix(dimensions);
 
-    mult = computeMult(a, b);
-    cout << "Elementos de la matriz A: \n";
-    visualizeArray(a);
-
-    cout << "Elementos de la matriz B: \n";
-    visualizeArray(b);
-
-    cout << "Resultado:  \n";
-    visualizeArray(mult);
+    mult = computeMult(a, b, dimensions);
 
     cout << "Tiempo de ejecución: " << t.elapsed() << "ms" << endl;
+
+    /* cout << "Elementos de la matriz A: \n";
+    visualizeArray(a, dimensions);
+
+    cout << "Elementos de la matriz B: \n";
+    visualizeArray(b, dimensions);
+
+    cout << "Resultado:  \n";
+    visualizeArray(mult, dimensions); */
+
 
     return 0;
 

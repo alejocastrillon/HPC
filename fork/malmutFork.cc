@@ -121,7 +121,6 @@ int main()
     a = initializeMatrix(dimensions);
     b = initializeMatrix(dimensions);
     Timer t;
-    cout << "Entro" << endl;
     mult = assingMult(a, b, dimensions);
     cout << "Elementos de la matriz A: " << endl;
     visualizeArray(a, dimensions);
