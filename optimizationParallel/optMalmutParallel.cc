@@ -64,7 +64,7 @@ void computeCell(int** &a, int** &b, int i, int dimensions, int* &sum)
         sum[j] = 0;
         for (size_t k = 0; k < dimensions; k++)
         {
-            sum[j] += a[i][k] * b[k][j];
+            sum[j] += a[i][k] * b[j][k];
         }
     }
 }
@@ -111,13 +111,13 @@ int main()
     b = initializeMatrix(dimensions);
     Timer t;
     mult = assingMult(a, b, dimensions);
-    cout << "Elementos de la matriz A: " << endl;
+    /* cout << "Elementos de la matriz A: " << endl;
     visualizeArray(a, dimensions);
 
     cout << "Elementos de la matriz B: " << endl;
     visualizeArray(b, dimensions);
     cout << "Resultado: " << endl;
-    visualizeArray(mult, dimensions);
+    visualizeArray(mult, dimensions); */
 
     cout << "Tiempo de ejecución: " << t.elapsed() << "ms" << endl;
 
