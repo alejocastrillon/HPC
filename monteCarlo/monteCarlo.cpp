@@ -1,10 +1,11 @@
 /* C++ program for estimation of Pi using Monte 
    Carlo Simulation */
-#include <bits/stdc++.h> 
+#include <bits/stdc++.h>
+#include "../timer.hh"
   
 // Defines precision for x and y values. More the 
 // interval, more the number of significant digits 
-#define INTERVAL 10
+#define INTERVAL 1000
 using namespace std; 
   
 int main() 
@@ -18,6 +19,7 @@ int main()
   
     // Total Random numbers generated = possible x 
     // values * possible y values
+    Timer t;
     for (i = 0; i < (INTERVAL * INTERVAL); i++) { 
   
         // Randomly generated x and y values 
@@ -45,7 +47,8 @@ int main()
         cout << i << rand_x << " " << rand_y << " " << circle_points 
              << " " << square_points << " - " << pi << endl << endl; 
 
-    } 
+    }
+    cout << "Tiempo de ejecución: " << t.elapsed() << "ms" << endl;
   
     // Final Estimated Value 
     cout << "\nFinal Estimation of Pi = " << pi; 
