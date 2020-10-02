@@ -24,16 +24,15 @@ int main()
   
         // Randomly generated x and y values 
         rand_x = double(rand() % (INTERVAL + 1)) / INTERVAL; 
-        cout << "aleatorio x " << rand_x;
+
        
         rand_y = double(rand() % (INTERVAL + 1)) / INTERVAL; 
-   		cout << "aleatorio y " << rand_y;
+
         // Distance between (x, y) from the origin 
         origin_dist = rand_x * rand_x + rand_y * rand_y; 
   
         // Checking if (x, y) lies inside the define 
         // circle with R=1
-        cout << origin_dist;
         if (origin_dist <= 1) 
             circle_points++; 
   
@@ -44,8 +43,7 @@ int main()
         pi = double(4 * circle_points) / square_points; 
   
         // For visual understanding (Optional) 
-        cout << i << rand_x << " " << rand_y << " " << circle_points 
-             << " " << square_points << " - " << pi << endl << endl; 
+
 
     }
     cout << "Tiempo de ejecución: " << t.elapsed() << "ms" << endl;
