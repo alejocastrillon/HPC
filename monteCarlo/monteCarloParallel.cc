@@ -17,14 +17,14 @@ void monteCarlo(int &circlePoints, int &squarePoints, double &pi, int minRange, 
     {
         // Randomly generated x and y values
         randX = double(rand() % (INTERVAL + 1)) / INTERVAL;
-        cout << "aleatorio x " << randX;
+        //cout << "aleatorio x " << randX;
         randY = double(rand() % (INTERVAL + 1)) / INTERVAL;
-        cout << "aleatorio y " << randY;
+        //cout << "aleatorio y " << randY;
         // Distance between (x, y) from the origin
         originDist = randX * randX + randY * randY;
         // Checking if (x, y) lies inside the define
         // circle with R=1
-        cout << originDist;
+        //cout << originDist;
         if (originDist <= 1)
             circlePoints++;
         // Total number of points generated
@@ -32,9 +32,9 @@ void monteCarlo(int &circlePoints, int &squarePoints, double &pi, int minRange, 
         // estimated pi after this iteration
         pi = double(4 * circlePoints) / squarePoints;
         // For visual understanding (Optional)
-        cout << i << randX << " " << randY << " " << circlePoints
+        /*cout << i << randX << " " << randY << " " << circlePoints
              << " " << squarePoints << " - " << pi << endl
-             << endl;
+             << endl;*/
     }
 }
 
@@ -52,9 +52,10 @@ int main()
     int minRange = 0;
     int maxRange = cantidadMuestra;
     vector<thread> threads;
-    Timer t;
     for (size_t i = 0; i < cantidadHilos; i++)
     {
+        /* cout << "Minimo Rango: " << minRange << endl;
+        cout << "Maximo Rango: " << maxRange << endl; */
         minRange += cantidadMuestra;
         if (i == (cantidadHilos - 1))
         {
@@ -67,11 +68,12 @@ int main()
         threads.push_back(thread(
             monteCarlo, ref(circlePoints), ref(squarePoints), ref(pi), minRange, maxRange));
     }
+    Timer t;
     for (thread &t : threads)
         t.join();
     cout << "Tiempo de ejecución: " << t.elapsed() << "ms" << endl;
     // Final Estimated Value
-    cout << "\nFinal Estimation of Pi = " << pi;
+    cout << "\nFinal Estimation of Pi = " << pi << endl;
 
     return 0;
 }
