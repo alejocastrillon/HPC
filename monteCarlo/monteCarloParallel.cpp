@@ -71,7 +71,7 @@ int main()
     Timer t;
     for (thread &t : threads)
         t.join();
-    cout << "Tiempo de ejecución: " << t.elapsed() << "ms" << endl;
+    cout << "Tiempo de ejecution: " << t.elapsed() << "ms" << endl;
     // Final Estimated Value
     cout << "\nFinal Estimation of Pi = " << pi << endl;
 
