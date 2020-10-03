@@ -1,16 +1,14 @@
 #include <iostream>
 #include <cmath>
 #include <cstdlib>
-#include <ctime>
-#include <iomanip>
-#include <string>
 #include <vector>
 #include <thread>
 #include "../timer.hh"
 
 #define NUMDARTS 100000
+using namespace std;
 
-void dartBoard(int &numHits, int cont, int minRange, int maxRange)
+void dartBoard(int &numHits, int &cont, int minRange, int maxRange)
 {
     double x_cor = 0;
     double y_cor = 0;
@@ -38,20 +36,17 @@ void dartBoard(int &numHits, int cont, int minRange, int maxRange)
         }
     }
 }
-void rand_seed();
-double get_RandomNum(double, double);
-using namespace std;
+
 int main()
 {
-
     int numHits = 0;
     int cont = 0;
     double piAprox = 0;
-    int cantidadHilos, cantidadMuestra;
-    cout << "Ingrese la cantidad de hilos: " << endl;
-    cin >> cantidadHilos;
+    int cantidadHilos = 100;
+    int cantidadMuestra;
+    /* cout << "Ingrese la cantidad de hilos: " << endl;
+    cin >> cantidadHilos; */
     cantidadMuestra = round(NUMDARTS / cantidadHilos);
-    cout << cantidadMuestra;
     int minRange = 0;
     int maxRange = cantidadMuestra;
     vector<thread> threads;
