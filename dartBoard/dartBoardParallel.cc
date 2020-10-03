@@ -19,7 +19,6 @@ void dartBoard(int &numHits, int &cont, int minRange, int maxRange)
     {
         for (int i = minRange; i < maxRange; i++)
         {
-
             x_cor = rand() * (1.0 / RAND_MAX);
             y_cor = rand() * (1.0 / RAND_MAX);
             x_sum = (x_cor * x_cor);
@@ -42,10 +41,9 @@ int main()
     int numHits = 0;
     int cont = 0;
     double piAprox = 0;
-    int cantidadHilos = 100;
-    int cantidadMuestra;
-    /* cout << "Ingrese la cantidad de hilos: " << endl;
-    cin >> cantidadHilos; */
+    int cantidadHilos, cantidadMuestra;
+    cout << "Ingrese la cantidad de hilos: " << endl;
+    cin >> cantidadHilos;
     cantidadMuestra = round(NUMDARTS / cantidadHilos);
     int minRange = 0;
     int maxRange = cantidadMuestra;
