@@ -53,7 +53,7 @@ int main()
     cin >> cantidadHilos;
     // Initializing rand()
     srand(time(NULL));
-    int cantidadMuestra = round((INTERVAL * INTERVAL) / cantidadHilos);
+    int cantidadMuestra = round((INTERVAL) / cantidadHilos);
     int minRange = 0;
     int maxRange = cantidadMuestra;
     vector<thread> threads;
@@ -64,7 +64,7 @@ int main()
         minRange += cantidadMuestra;
         if (i == (cantidadHilos - 1))
         {
-            maxRange = INTERVAL * INTERVAL;
+            maxRange = INTERVAL;
         }
         else
         {
