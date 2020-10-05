@@ -22,13 +22,14 @@ int main()
     double pi_approx = 0;
     int cont = 0;
     Timer t;
+    srand(time(NULL)); 
     if ( NUMDARTS != 0  )
     {
         for ( int i = 0; i < NUMDARTS; i++) 
         {
         	
-            x_cor = rand() * (1.0 / RAND_MAX);
-            y_cor = rand() * (1.0 / RAND_MAX);
+            x_cor = get_RandomNum(0,1.0);
+            y_cor = get_RandomNum(0,1.0);
             x_sum = (x_cor * x_cor); 
 			y_sum = (y_cor * y_cor);
             x_y_total = (x_cor * x_cor) + (y_cor * y_cor);
@@ -47,3 +48,8 @@ int main()
     return 0;
 }
 
+
+double get_RandomNum(double x, double y)
+    {
+        return x + (y - x) *  rand() * (1.0 / RAND_MAX);
+    }

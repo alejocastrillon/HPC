@@ -9,16 +9,16 @@
 // interval, more the number of significant digits
 #define INTERVAL 1000
 using namespace std;
-
+double get_RandomNum(double,double);
 void monteCarlo(int &circlePoints, int &squarePoints, double &pi, int minRange, int maxRange)
 {
     double randX, randY, originDist;
     for (size_t i = minRange; i < maxRange; i++)
     {
         // Randomly generated x and y values
-        randX = double(rand() % (INTERVAL + 1)) / INTERVAL;
+        randX = get_RandomNum(1.0,-1.0);
         //cout << "aleatorio x " << randX;
-        randY = double(rand() % (INTERVAL + 1)) / INTERVAL;
+        randY = get_RandomNum(1.0,-1.0);
         //cout << "aleatorio y " << randY;
         // Distance between (x, y) from the origin
         originDist = randX * randX + randY * randY;
@@ -36,6 +36,11 @@ void monteCarlo(int &circlePoints, int &squarePoints, double &pi, int minRange, 
              << " " << squarePoints << " - " << pi << endl
              << endl;*/
     }
+}
+
+double get_RandomNum(double x, double y)
+{
+        return x + (y - x) *  rand() * (1.0 / RAND_MAX);
 }
 
 int main()

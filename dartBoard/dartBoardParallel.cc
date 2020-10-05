@@ -7,7 +7,7 @@
 
 #define NUMDARTS 100000
 using namespace std;
-
+double get_RandomNum(double,double);
 void dartBoard(int &numHits, int &cont, int minRange, int maxRange)
 {
     double x_cor = 0;
@@ -19,8 +19,8 @@ void dartBoard(int &numHits, int &cont, int minRange, int maxRange)
     {
         for (int i = minRange; i < maxRange; i++)
         {
-            x_cor = rand() * (1.0 / RAND_MAX);
-            y_cor = rand() * (1.0 / RAND_MAX);
+            x_cor = get_RandomNum(0,1.0);
+            y_cor = get_RandomNum(0,1.0);
             x_sum = (x_cor * x_cor);
             y_sum = (y_cor * y_cor);
             x_y_total = (x_cor * x_cor) + (y_cor * y_cor);
@@ -36,6 +36,11 @@ void dartBoard(int &numHits, int &cont, int minRange, int maxRange)
     }
 }
 
+double get_RandomNum(double x, double y)
+    {
+        return x + (y - x) *  rand() * (1.0 / RAND_MAX);
+    }
+    
 int main()
 {
     int numHits = 0;
