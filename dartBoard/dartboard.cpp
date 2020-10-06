@@ -6,7 +6,7 @@
 #include <string>
 #include "../timer.hh"
 
-#define NUMDARTS 100000
+#define NUMDARTS 1000000
 void rand_seed();
 double get_RandomNum(double,double);
 using namespace std;

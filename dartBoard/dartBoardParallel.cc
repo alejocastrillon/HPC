@@ -5,7 +5,7 @@
 #include <thread>
 #include "../timer.hh"
 
-#define NUMDARTS 100000
+#define NUMDARTS 1000000
 using namespace std;
 double get_RandomNum(double,double);
 void dartBoard(int &numHits, int &cont, int minRange, int maxRange)

@@ -5,7 +5,7 @@
   
 // Defines precision for x and y values. More the 
 // interval, more the number of significant digits 
-#define INTERVAL 100000
+#define INTERVAL 1000000
 using namespace std; 
 double get_RandomNum(double,double);
 int main() 
