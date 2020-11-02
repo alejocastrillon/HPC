@@ -59,8 +59,8 @@ int main()
     vector<thread> threads;
     for (size_t i = 0; i < cantidadHilos; i++)
     {
-        /* cout << "Minimo Rango: " << minRange << endl;
-        cout << "Maximo Rango: " << maxRange << endl; */
+        threads.push_back(thread(
+            monteCarlo, ref(circlePoints), ref(squarePoints), ref(pi), minRange, maxRange));
         minRange += cantidadMuestra;
         if (i == (cantidadHilos - 1))
         {
@@ -70,8 +70,6 @@ int main()
         {
             maxRange += cantidadMuestra;
         }
-        threads.push_back(thread(
-            monteCarlo, ref(circlePoints), ref(squarePoints), ref(pi), minRange, maxRange));
     }
     Timer t;
     for (thread &t : threads)
